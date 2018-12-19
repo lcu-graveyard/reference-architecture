@@ -1,4 +1,4 @@
-import { Status, isStatusSuccess } from '@lcu/common/lcu.api';
+import { Status, isStatusSuccess } from '@lcu/common';
 
 export class BaseResponse {
   public Status: Status;
