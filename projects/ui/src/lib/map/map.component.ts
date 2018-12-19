@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Address } from '@lcu/common/lcu.api';
+import { Address } from '@lcu/common';
 
 @Component({
   selector: 'f-map',
