@@ -1,6 +1,6 @@
 {
 	"name": "@lowcodeunit/reference-architecture",
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"scripts": {
 		"deploy": "npm version patch && npm run deploy:all",
 		"deploy:all": "npm run deploy:common && npm run deploy:core && npm run deploy:routing && npm run deploy:api && npm run deploy:ui && npm run deploy:hosting && npm run deploy:elements && npm run deploy:solutions && npm run deploy:apps",
