@@ -2,7 +2,7 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable, OperatorFunction, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Injector } from '@angular/core';
-import { join } from 'path';
+import { join } from 'path-browserify';
 
 export class DAFServiceSettings {
 	public APIRoot?: string;
