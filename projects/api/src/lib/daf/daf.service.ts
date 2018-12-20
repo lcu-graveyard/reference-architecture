@@ -2,14 +2,27 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable, OperatorFunction, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Injector } from '@angular/core';
+import { join } from 'path';
+
+export class DAFServiceSettings {
+	public APIRoot?: string;
+}
 
 export abstract class DAFService {
 	//	Fields
 	protected http: Http;
-	
+
+	protected settings: DAFServiceSettings;
+
 	//  Constructors
 	constructor(protected injector: Injector) {
 		this.http = injector.get(Http);
+
+		try {
+			this.settings = injector.get(DAFServiceSettings);
+		} catch (err) {
+			
+		}
 	}
 
 	//  Helpers
@@ -27,14 +40,14 @@ export abstract class DAFService {
 	}
 
 	protected delete<T>(path: string): Observable<T> {
-		return this.http.delete(path).pipe(
+		return this.http.delete(this.resolvePath(path)).pipe(
 			this.map<T>(),
 			this.catchError()
 		);
 	}
 
 	protected get<T>(path: string): Observable<T> {
-		return this.http.get(path).pipe(
+		return this.http.get(this.resolvePath(path)).pipe(
 			this.map<T>(),
 			this.catchError()
 		);
@@ -62,7 +75,7 @@ export abstract class DAFService {
 
 		var options = new RequestOptions({ headers: headers });
 
-		return this.http.patch(path, body, options).pipe(
+		return this.http.patch(this.resolvePath(path), body, options).pipe(
 			this.map<T>(),
 			this.catchError()
 		);
@@ -75,7 +88,7 @@ export abstract class DAFService {
 
 		var options = new RequestOptions({ headers: headers });
 
-		return this.http.post(path, body, options).pipe(
+		return this.http.post(this.resolvePath(path), body, options).pipe(
 			this.map<T>(),
 			this.catchError()
 		);
@@ -88,9 +101,16 @@ export abstract class DAFService {
 
 		var options = new RequestOptions({ headers: headers });
 
-		return this.http.put(path, body, options).pipe(
+		return this.http.put(this.resolvePath(path), body, options).pipe(
 			this.map<T>(),
 			this.catchError()
 		);
+	}
+
+	protected resolvePath(path: string) {
+		if (this.settings && this.settings.APIRoot)
+			return join(this.settings.APIRoot, path);
+		else
+			return path;
 	}
 }
