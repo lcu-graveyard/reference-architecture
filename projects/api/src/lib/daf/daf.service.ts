@@ -2,7 +2,6 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable, OperatorFunction, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Injector } from '@angular/core';
-import { join } from 'path-browserify';
 
 export class DAFServiceSettings {
 	public APIRoot?: string;
@@ -109,7 +108,7 @@ export abstract class DAFService {
 
 	protected resolvePath(path: string) {
 		if (this.settings && this.settings.APIRoot)
-			return join(this.settings.APIRoot, path);
+			return `${this.settings.APIRoot}${path}`;
 		else
 			return path;
 	}
