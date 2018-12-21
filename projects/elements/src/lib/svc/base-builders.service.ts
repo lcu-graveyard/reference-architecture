@@ -1,7 +1,7 @@
 import { Status } from '@lcu/common';
-import { IDisplayModule, IBuildersService, SolutionModuleConfig, ISolutionsService, DisplayModuleSetup } from '../display.types';
+import { IDisplayModule, IBuildersService, SolutionModuleConfig, ISolutionsService, DisplayModuleSetup, SolutionsSetup } from '../display.types';
 import { Observable } from 'rxjs';
-import { BaseModeledResponse } from '@lcu/core';
+import { BaseModeledResponse, isResultSuccess } from '@lcu/core';
 
 export abstract class BaseBuildersService implements IBuildersService {
 	//	Fields
@@ -10,26 +10,26 @@ export abstract class BaseBuildersService implements IBuildersService {
 	//	Constructors
 	constructor(protected solutionsSvc: ISolutionsService) {
 		this.slnConfigs = [];
+	}
 
-		// solutionsSetup.Context.subscribe(setup => {
-		// 	if (setup)
-		// 		this.solutionsSvc.LoadSolutionModules().subscribe(
-		// 			(result) => {
-		// 				if (isResultSuccess(result)) {
-		// 					var slnModules = result.Model;
+	protected processSolutionSetup(setup: SolutionsSetup) {
+		if (setup)
+			this.solutionsSvc.LoadSolutionModules().subscribe(
+				(result) => {
+					if (isResultSuccess(result)) {
+						var slnModules = result.Model;
 
-		// 					var solutionSets = setup.Configs.map(c => {
-		// 						return slnModules.map(sm => {
-		// 							return sm.Modules.find(m => m.Control.Base == c.Control.Base && m.Control.Type == c.Control.Type);
-		// 						});
-		// 					});
+						var solutionSets = setup.Configs.map(c => {
+							return slnModules.map(sm => {
+								return sm.Modules.find(m => m.Control.Base == c.Control.Base && m.Control.Type == c.Control.Type);
+							});
+						});
 
-		// 					this.slnConfigs = solutionSets && solutionSets.length > 0 ? solutionSets.reduce((prev, cur) => {
-		// 						return [...prev, ...cur];
-		// 					}) : [];
-		// 				}
-		// 			}).unsubscribe();
-		// });
+						this.slnConfigs = solutionSets && solutionSets.length > 0 ? solutionSets.reduce((prev, cur) => {
+							return [...prev, ...cur];
+						}) : [];
+					}
+				}).unsubscribe();
 	}
 
 	//	API Methods
@@ -74,7 +74,7 @@ export abstract class BaseBuildersService implements IBuildersService {
 
 	//	Helpers
 	protected abstract loadCoreDisplayModules(): DisplayModuleSetup[];
-	
+
 	protected ensureDisplayModules(displaySetup: DisplayModuleSetup, displayModules: DisplayModuleSetup[]): void {
 		var existingSetup = displayModules.find(dm => displaySetup.BaseKey == dm.BaseKey);
 
