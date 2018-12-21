@@ -79,10 +79,11 @@ export abstract class BaseBuildersService implements IBuildersService {
 	}
 
 	protected ensureSolutionDisplayModules(slnConfig: SolutionModuleConfig, displayModules: DisplayModuleSetup[]): void {
-		slnConfig.DisplaySetups.forEach(
-			(displaySetup) => {
-				this.ensureDisplayModules(displaySetup, displayModules);
-			});
+		if (slnConfig && slnConfig.DisplaySetups)
+			slnConfig.DisplaySetups.forEach(
+				(displaySetup) => {
+					this.ensureDisplayModules(displaySetup, displayModules);
+				});
 	}
 
 	protected loadDisplayModules(): DisplayModuleSetup[] {
@@ -104,7 +105,7 @@ export abstract class BaseBuildersService implements IBuildersService {
 	}
 
 	protected processSolutionSetup(setup: SolutionsSetup) {
-		if (setup)
+		if (setup) {
 			this.solutionsSvc.LoadSolutionModules().subscribe(
 				(result) => {
 					if (isResultSuccess(result)) {
@@ -121,5 +122,6 @@ export abstract class BaseBuildersService implements IBuildersService {
 						}) : [];
 					}
 				}).unsubscribe();
+		}
 	}/*  */
 }
