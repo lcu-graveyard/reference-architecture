@@ -12,26 +12,6 @@ export abstract class BaseBuildersService implements IBuildersService {
 		this.slnConfigs = [];
 	}
 
-	protected processSolutionSetup(setup: SolutionsSetup) {
-		if (setup)
-			this.solutionsSvc.LoadSolutionModules().subscribe(
-				(result) => {
-					if (isResultSuccess(result)) {
-						var slnModules = result.Model;
-
-						var solutionSets = setup.Configs.map(c => {
-							return slnModules.map(sm => {
-								return sm.Modules.find(m => m.Control.Base == c.Control.Base && m.Control.Type == c.Control.Type);
-							});
-						});
-
-						this.slnConfigs = solutionSets && solutionSets.length > 0 ? solutionSets.reduce((prev, cur) => {
-							return [...prev, ...cur];
-						}) : [];
-					}
-				}).unsubscribe();
-	}
-
 	//	API Methods
 	public LoadDisplayModules(): Observable<BaseModeledResponse<DisplayModuleSetup[]>> {
 		return new Observable(obs => {
@@ -122,4 +102,24 @@ export abstract class BaseBuildersService implements IBuildersService {
 
 		return displayModules;
 	}
+
+	protected processSolutionSetup(setup: SolutionsSetup) {
+		if (setup)
+			this.solutionsSvc.LoadSolutionModules().subscribe(
+				(result) => {
+					if (isResultSuccess(result)) {
+						var slnModules = result.Model;
+
+						var solutionSets = setup.Configs.map(c => {
+							return slnModules.map(sm => {
+								return sm.Modules.find(m => m.Control.Base == c.Control.Base && m.Control.Type == c.Control.Type);
+							});
+						});
+
+						this.slnConfigs = solutionSets && solutionSets.length > 0 ? solutionSets.reduce((prev, cur) => {
+							return [...prev, ...cur];
+						}) : [];
+					}
+				}).unsubscribe();
+	}/*  */
 }
