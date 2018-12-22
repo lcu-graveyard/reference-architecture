@@ -54,3 +54,23 @@ export class DataSetCollection {
 
 	public Name: string;
 }
+
+export class EmbedConfig {
+	public DashboardID: string;
+
+	public DatasetID: string;
+
+	public EmbedToken: EmbedToken;
+
+	public EmbedURL: string;
+
+	public ID: string;
+}
+
+export class EmbedToken {
+	public ID: string;
+
+	public Token: string;
+
+	public Expiration: string;
+}
