@@ -150,5 +150,7 @@ export class SolutionsSetup {
 export class SolutionElement {
 	public Control: RenderingControl;
 
+  public Favorite: boolean;
+
 	public Title: string;
 }
