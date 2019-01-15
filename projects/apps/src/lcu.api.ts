@@ -9,5 +9,6 @@ export * from './lib/flow.types';
 export * from './lib/helpers';
 export * from './lib/identity.types';
 export * from './lib/org.types';
+export * from './lib/provider.types';
 export * from './lib/provisioning.types';
 export * from './lib/reporting.types';
