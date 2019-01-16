@@ -1,9 +1,9 @@
 export class LoginProviderConfig {
-    public FacebookConfig: FacebookConfig;
+    public FacebookConfigs: { [name: string]: FacebookConfig };
 }
 
 export class FacebookConfig {
-    public AppId: string;
+    public AppID: string;
 
     public AppSecret: string;
 }
