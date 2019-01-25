@@ -20,7 +20,7 @@ export class ClaimModel {
 	public Value: string;
 }
 
-export class OrganizationIdentityModel {
+export class OrganizationIdentityModel { 
 	public Profile: any;
 
 	public Username: string;
