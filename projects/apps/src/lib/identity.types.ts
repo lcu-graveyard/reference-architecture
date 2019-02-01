@@ -25,3 +25,9 @@ export class OrganizationIdentityModel {
 
 	public Username: string;
 }
+
+export class ProviderModel {
+	public Type: string;
+
+	public Metadata: { [key: string]: string};
+}
