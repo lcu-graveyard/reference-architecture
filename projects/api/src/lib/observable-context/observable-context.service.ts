@@ -1,15 +1,15 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export abstract class ObservableContextService<T> {
-  //	Fields
+  // 	Fields
   protected loader: BehaviorSubject<boolean>;
 
   protected subject: BehaviorSubject<T>;
 
-  //	Properties
+  // 	Properties
   public readonly Context: Observable<T>;
 
-  public readonly Loading: Observable<boolean>
+  public readonly Loading: Observable<boolean>;
 
   //  Constructors
   constructor() {
@@ -18,16 +18,16 @@ export abstract class ObservableContextService<T> {
     this.subject = new BehaviorSubject<T>(this.defaultValue());
 
     this.Context = this.subject.asObservable();
-    
+
     this.Loading = this.loader.asObservable();
   }
 
-  //  Helpers 
+  //  Helpers
   protected loading(loading: boolean) {
     this.loader.next(loading);
   }
 
-	protected defaultValue(): T {
-		return null;
-	}
+  protected defaultValue(): T {
+    return null;
+  }
 }
