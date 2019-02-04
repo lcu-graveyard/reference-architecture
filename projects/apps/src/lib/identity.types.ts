@@ -29,5 +29,9 @@ export class OrganizationIdentityModel {
 export class ProviderModel {
 	public Type: string;
 
+	public AppID: string;
+
+	public AppSecret: string;
+
 	public Metadata: { [key: string]: string};
 }
